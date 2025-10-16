@@ -1,19 +1,20 @@
 
+# cloudbuild.yaml
 steps:
   # Step 1: Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/b-profiles-461910/3b-backend', '.']
 
-  # Step 2: Push Docker image to Container Registry
+  # Step 2: Push Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.iob-profiles-461910/3b-backend']
+    args: ['push', 'gcr.io/b-profiles-461910/3b-backend']
 
   # Step 3: Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       [
-        'run', 'deploy', '3b',   # <--- new service name
+        'run', 'deploy', '3b-backend-service',     # Name of new Cloud Run service
         '--image', 'gcr.io/b-profiles-461910/3b-backend',
         '--region', 'asia-south1',
         '--platform', 'managed',
@@ -21,3 +22,7 @@ steps:
         '--port', '8080',
         '--timeout', '600s'
       ]
+
+# Use Cloud Logging only to satisfy user-managed SA policy
+options:
+  logging: CLOUD_LOGGING_ONLY
