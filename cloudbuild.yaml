@@ -1,26 +1,23 @@
+
 steps:
   # Step 1: Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/b-profiles-461910/3bprofiles', '.']
+    args: ['build', '-t', 'gcr.io/b-profiles-461910/3b-backend', '.']
 
-  # Step 2: Push image to Google Container Registry
+  # Step 2: Push Docker image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/b-profiles-461910/3bprofiles']
+    args: ['push', 'gcr.iob-profiles-461910/3b-backend']
 
-  # Step 3: Deploy to Cloud Run using the image
+  # Step 3: Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       [
-        'run', 'deploy', 'threeb',
-        '--image', 'gcr.io/b-profiles-461910/3bprofiles',
+        'run', 'deploy', '3b',   # <--- new service name
+        '--image', 'gcr.io/b-profiles-461910/3b-backend',
         '--region', 'asia-south1',
         '--platform', 'managed',
         '--allow-unauthenticated',
         '--port', '8080',
-        '--clear-command',    # ensure Dockerfile CMD is used
-        '--clear-args'        # remove any old overrides
+        '--timeout', '600s'
       ]
-
-options:
-  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
