@@ -70,4 +70,4 @@ connectDB()
   });
 
 console.log("TRANSLATION_API_KEY:", process.env.TRANSLATION_API_KEY);
-//yo yo
+
