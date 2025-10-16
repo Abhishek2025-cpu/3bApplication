@@ -70,4 +70,3 @@ connectDB()
   });
 
 console.log("TRANSLATION_API_KEY:", process.env.TRANSLATION_API_KEY);
-//new branch - backend-2024-10-16
