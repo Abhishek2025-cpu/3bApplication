@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 });
 
 // Start server after DB connection
-const PORT = process.env.PORT || 8080;
+const PORT =  8080;
 
 connectDB()
   .then(() => {
