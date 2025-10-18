@@ -3,7 +3,7 @@ const SubAdmin = require('../models/SubAdmin');
 const bcrypt = require('bcryptjs');
 const { uploadBufferToGCS } = require('../utils/gcloud');
 
-// ✅ Admin Registration (No hashing)
+
 exports.register = async (req, res) => {
   try {
     const { email, number, password } = req.body;
